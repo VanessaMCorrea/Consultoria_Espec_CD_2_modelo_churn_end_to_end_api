@@ -10,15 +10,11 @@ app = FastAPI(
 
 @app.get("/")
 def root():
-    return {
-        "message": "API de churn funcionando"
-    }
+    return {"message": "API de churn funcionando"}
 
 @app.get("/health")
 def health():
-    return {
-        "status": "ok"
-    }
+    return {"status": "ok"}
 
 @app.post("/predict")
 def predict(payload: ChurnInput):
