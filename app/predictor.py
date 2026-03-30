@@ -1,16 +1,32 @@
 import os
 import joblib
 import pandas as pd
+from dotenv import load_dotenv
+from huggingface_hub import hf_hub_download
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "model", "churn_pipeline.joblib")
+load_dotenv()
 
-model = joblib.load(MODEL_PATH)
+HF_REPO_ID = os.getenv("HF_REPO_ID")
+HF_FILENAME = os.getenv("HF_FILENAME")
+HF_TOKEN = os.getenv("HF_TOKEN")
+
+if not HF_REPO_ID:
+    raise ValueError("HF_REPO_ID não definido no .env")
+
+if not HF_FILENAME:
+    raise ValueError("HF_FILENAME não definido no .env")
+
+model_path = hf_hub_download(
+    repo_id=HF_REPO_ID,
+    filename=HF_FILENAME,
+    token=HF_TOKEN
+)
+
+model = joblib.load(model_path)
 
 def make_prediction(input_data: dict) -> dict:
     df = pd.DataFrame([input_data])
 
-    # garantir coerência com o treino
     df["SeniorCitizen"] = df["SeniorCitizen"].astype(str)
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
 
