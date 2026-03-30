@@ -95,26 +95,30 @@ A API foi desenvolvida com **FastAPI** e consome o modelo hospedado no Hugging F
   "PaymentMethod": "Electronic check",
   "MonthlyCharges": 89.5,
   "TotalCharges": 1074.0
-}
+} 
+```
 
-Exemplo de Resposta
-JSON{
+### Exemplo de Resposta
+```json
+{
   "churn_predito": 1,
   "churn_label": "Yes",
   "probabilidade_churn": 0.6404
 }
+```
 
-🤗 Hugging Face
+## Hugging Face
 Modelo publicado em:
 VanessaMCorrea/churn-telecom-model
-⚠️ Limitações e Considerações Éticas
 
-O dataset utilizado é público e pode não refletir perfeitamente a realidade da empresa.
-Pode ocorrer queda de performance em dados novos (data drift).
-Modelos de árvore de decisão simplificam comportamentos complexos de clientes.
-Não recomendado para uso em produção sem validação adicional e monitoramento contínuo.
+## ⚠️ Limitações e Considerações Éticas
 
-👩‍💻 Autora
+- **O dataset utilizado é público e pode não refletir perfeitamente a realidade da empresa.
+- **Pode ocorrer queda de performance em dados novos (data drift).
+- **Modelos de árvore de decisão simplificam comportamentos complexos de clientes.
+- **Não recomendado para uso em produção sem validação adicional e monitoramento contínuo.
+
+## 👩‍💻 Autora
 Vanessa Correa
 PUC-SP — Ciência de Dados e Inteligência Artificial
 Projeto acadêmico com foco em MLOps.
