@@ -8,6 +8,9 @@ Este modelo prediz a probabilidade de um cliente cancelar o serviço (churn) com
 
 ### Features de Entrada
 
+- Base de dados: https://www.kaggle.com/datasets/palashfendarkar/wa-fnusec-telcocustomerchurn
+
+
 | Feature            | Tipo    | Descrição                          |
 |--------------------|---------|------------------------------------|
 | `gender`           | str     | Gênero do cliente                  |
@@ -107,16 +110,16 @@ A API foi desenvolvida com **FastAPI** e consome o modelo hospedado no Hugging F
 }
 ```
 
-## Hugging Face
+## Publicação do modelo: Hugging Face
 Modelo publicado em:
 VanessaMCorrea/churn-telecom-model
 
 ## ⚠️ Limitações e Considerações Éticas
 
-- **O dataset utilizado é público e pode não refletir perfeitamente a realidade da empresa.
-- **Pode ocorrer queda de performance em dados novos (data drift).
-- **Modelos de árvore de decisão simplificam comportamentos complexos de clientes.
-- **Não recomendado para uso em produção sem validação adicional e monitoramento contínuo.
+- O dataset utilizado é público e pode não refletir perfeitamente a realidade da empresa.
+- Pode ocorrer queda de performance em dados novos (data drift).
+- Modelos de árvore de decisão simplificam comportamentos complexos de clientes.
+- Não recomendado para uso em produção sem validação adicional e monitoramento contínuo.
 
 ## 👩‍💻 Autora
 Vanessa Correa
