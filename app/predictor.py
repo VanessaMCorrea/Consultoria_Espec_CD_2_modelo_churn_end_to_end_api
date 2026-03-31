@@ -6,20 +6,12 @@ from huggingface_hub import hf_hub_download
 
 load_dotenv()
 
-HF_REPO_ID = os.getenv("HF_REPO_ID")
-HF_FILENAME = os.getenv("HF_FILENAME")
-HF_TOKEN = os.getenv("HF_TOKEN")
-
-if not HF_REPO_ID:
-    raise ValueError("HF_REPO_ID não definido no .env")
-
-if not HF_FILENAME:
-    raise ValueError("HF_FILENAME não definido no .env")
+HF_REPO_ID = os.getenv("HF_REPO_ID", "VanessaMCorrea/churn-telecom-model")
+HF_FILENAME = os.getenv("HF_FILENAME", "churn_pipeline.joblib")
 
 model_path = hf_hub_download(
     repo_id=HF_REPO_ID,
-    filename=HF_FILENAME,
-    token=HF_TOKEN
+    filename=HF_FILENAME
 )
 
 model = joblib.load(model_path)
