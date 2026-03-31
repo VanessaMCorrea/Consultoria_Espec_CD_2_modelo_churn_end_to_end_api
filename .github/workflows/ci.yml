@@ -33,4 +33,4 @@ jobs:
           sleep 10
 
       - name: Rodar testes
-      run: pytest tests/ -v --tb=short
+        run: pytest tests/ -v --tb=short
