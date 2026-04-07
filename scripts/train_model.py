@@ -4,6 +4,8 @@ import pandas as pd
 
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.tree import DecisionTreeClassifier
@@ -17,7 +19,6 @@ os.makedirs(MODEL_DIR, exist_ok=True)
 
 df = pd.read_csv(DATA_PATH)
 
-# Tratamentos baseados no projeto
 df = df.drop(columns=["customerID"])
 df["SeniorCitizen"] = df["SeniorCitizen"].astype("object")
 df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
@@ -29,8 +30,13 @@ df = df.replace({
 X = df.drop(columns=["Churn"])
 y = df["Churn"].map({"No": 0, "Yes": 1})
 
-categorical_cols = X.select_dtypes(include=["object"]).columns.tolist()
-numeric_cols = X.select_dtypes(exclude=["object"]).columns.tolist()
+# ✅ NOVO: divisão treino/teste com estratificação
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+categorical_cols = X_train.select_dtypes(include=["object"]).columns.tolist()
+numeric_cols = X_train.select_dtypes(exclude=["object"]).columns.tolist()
 
 categorical_pipeline = Pipeline([
     ("imputer", SimpleImputer(strategy="most_frequent")),
@@ -55,10 +61,16 @@ model = Pipeline([
     ))
 ])
 
-model.fit(X, y)
+# ✅ NOVO: treinar apenas com X_train
+model.fit(X_train, y_train)
+
+# ✅ NOVO: avaliar no conjunto de teste
+y_pred = model.predict(X_test)
+print("\n=== Métricas no conjunto de teste ===")
+print(classification_report(y_test, y_pred, target_names=["No Churn", "Churn"]))
 
 joblib.dump(model, MODEL_PATH)
 
-print(f"Modelo salvo em: {MODEL_PATH}")
+print(f"\nModelo salvo em: {MODEL_PATH}")
 print("Colunas categóricas:", categorical_cols)
 print("Colunas numéricas:", numeric_cols)
