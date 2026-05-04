@@ -5,4 +5,4 @@ __pycache__/
 .ipynb_checkpoints/
 app/model/*.joblib
 app/model/*.pkl
-.DS_Store
+.DS_Storemodel.zip
