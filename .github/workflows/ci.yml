@@ -32,6 +32,10 @@ jobs:
   testes:
     runs-on: ubuntu-latest
     needs: qualidade
+    env:
+      HF_REPO_ID: VanessaMCorrea/churn-telecom-model
+      HF_FILENAME: churn_pipeline.joblib
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
     steps:
       - name: Baixar código
@@ -61,10 +65,12 @@ jobs:
   api_modelo:
     runs-on: ubuntu-latest
     needs: testes
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     env:
       HF_REPO_ID: VanessaMCorrea/churn-telecom-model
       HF_FILENAME: churn_pipeline.joblib
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
     steps:
       - name: Baixar código

@@ -49,3 +49,15 @@ def test_predict_accepts_different_tenure_values(client, valid_payload, tenure, 
 
     assert response.status_code == 200
     assert response.json()["churn_predito"] in [0, 1]
+
+@pytest.mark.predict
+def test_predict_rejects_missing_field(client):
+    """Payload sem campos obrigatórios deve retornar 422"""
+    response = client.post("/predict", json={"gender": "Female"})
+    assert response.status_code == 422
+
+@pytest.mark.predict
+def test_predict_rejects_wrong_type(client):
+    """Campo tenure com tipo errado deve retornar 422"""
+    response = client.post("/predict", json={"tenure": "não é número"})
+    assert response.status_code == 422
